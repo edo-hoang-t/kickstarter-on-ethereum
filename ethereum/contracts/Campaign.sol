@@ -44,9 +44,10 @@ contract Campaign {
 
     function contribute() public payable {
         require(msg.value > minimumContribution);
-
-        approvers[msg.sender] = true;
-        approversCount += 1;
+        if (!approvers[msg.sender]) {
+            approvers[msg.sender] = true;
+            approversCount += 1;
+        }
     }
 
     function createRequest(string description, uint value, address recipient) public managerRestricted {
